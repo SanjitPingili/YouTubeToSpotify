@@ -1,18 +1,24 @@
 {
-  "name": "demoreactapp",
+  "name": "YouTubeToSpotify",
   "version": "1.0.0",
-  "description": "React App",
+  "description": "React/Node+Express Starter Template: https://www.section.io/engineering-education/how-to-setup-nodejs-express-for-react/",
   "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "\\"
+    "url": "git+https://github.com/SanjitPingili/YouTubeToSpotify.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.17.1"
-  }
+  "bugs": {
+    "url": "https://github.com/SanjitPingili/YouTubeToSpotify/issues"
+  },
+  "homepage": "https://github.com/SanjitPingili/YouTubeToSpotify#readme"
 }
