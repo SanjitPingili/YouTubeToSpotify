@@ -18,19 +18,23 @@ state = {
     const body = await response.json();
 
     if (response.status !== 200) {
-      throw Error(body.message) 
+      throw Error(body.message)
     }
     return body;
   };
+
+  loginSpotify() {
+    window.location.href = 'http://localhost:8000/loginSpotify';
+  }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Youtube To Spotify</h1>
         </header>
         <p className="App-intro">{this.state.data}</p>
+        <button onClick={this.loginSpotify}>Login to Spotify</button>
       </div>
     );
   }
