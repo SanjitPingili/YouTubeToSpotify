@@ -6,7 +6,14 @@ const config = require('../config');
 router.get('/', (req, res) => {
   let BASE_URL = 'https://api.spotify.com/v1/';
   let headers = {'Authorization': 'Bearer ' + config.access_token}
-  if (config.access_token != "") {
+  if (config.loggedOut == true) {
+    console.log("logged out");
+    res.send({
+        login : false,
+        name : "Not Logged In"
+    })
+  }
+  else if (config.access_token != "") {
     request(
       {
         method: "GET",
@@ -20,13 +27,15 @@ router.get('/', (req, res) => {
           console.log(body['display_name']);
           res.send(
             {
-              express : body['display_name']
+              login : true,
+              name : body['display_name']
             });
         } else {
           console.log("Error fetching profile");
         }
     });
   }
+
 
   let GOOGLE_BASE_URL = 'https://www.googleapis.com/youtube/v3/';
   let google_headers = {'Authorization': 'Bearer ' + config.google_access_token};
