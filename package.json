@@ -4,9 +4,13 @@
   "description": "React/Node+Express Starter Template: https://www.section.io/engineering-education/how-to-setup-nodejs-express-for-react/",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.17.2"
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "json": "^11.0.0",
+    "request": "^2.88.2"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,12 +20,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-session": "^1.17.2",
-    "request": "^2.88.2"
-  }
+  "license": "ISC"
 }
