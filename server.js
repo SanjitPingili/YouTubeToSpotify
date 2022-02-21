@@ -20,6 +20,8 @@ app.use(
 
 
 app.use("/loginSpotify", require("./server/routes/loginSpotify"));
+app.use("/callback", require("./server/routes/callbackSpotify"));
+app.use("/express_backend", require("./server/routes/home"))
 
 
 
