@@ -4,12 +4,14 @@ import './App.css';
 
 class App extends Component {
 state = {
-    data: null
+    data: null,
+    loggedIn: false,
+    username: "Not Logged In"
   };
 
   componentDidMount() {
     this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
+      .then(res => this.setState({ data: res.express, loggedIn: res.login, username: res.name}))
       .catch(err => console.log(err));
   }
     // fetching the GET route from the Express server which matches the GET route from server.js
@@ -27,14 +29,36 @@ state = {
     window.location.href = 'http://localhost:8000/loginSpotify';
   }
 
+  logoutSpotify() {
+      window.location.href = 'http://localhost:8000/logout'
+
+      /*const url = 'https://www.spotify.com/logout/'
+      let left = (screen.width/2)-(700/2);
+      let top = (screen.height/2)-(700/2);
+      const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=700,top='+top+',left='+left);
+      setTimeout(() => spotifyLogoutWindow.close(), 2000);*/
+   }
+
   render() {
+    const isLoggedIn = this.state.loggedIn;
+    let button;
+    if (!isLoggedIn) {
+        button = <button onClick={this.loginSpotify}>Login to Spotify</button>;
+    } else {
+        button = <button onClick={this.logoutSpotify}>Logout of Spotify</button>;
+    }
+
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Youtube To Spotify</h1>
+          <p className="App-intro">{this.state.username}</p>
+          <div>
+            <p>{button}</p>
+           </div>
         </header>
-        <p className="App-intro">{this.state.data}</p>
-        <button onClick={this.loginSpotify}>Login to Spotify</button>
+
+
       </div>
     );
   }

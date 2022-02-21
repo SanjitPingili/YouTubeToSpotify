@@ -9,6 +9,7 @@ module.exports = {
   state: "",
   access_token: "",
   refresh_token: "",
+  loggedOut: false,
 
   googleClientID: "919300781767-so4aua5uc2pn71s6ja3l5gusf7rnehgm.apps.googleusercontent.com",
   googleClientSecret: "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",
