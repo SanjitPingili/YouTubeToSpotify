@@ -20,9 +20,13 @@ app.use("/loginSpotify", require("./routes/loginSpotify"));
 app.use("/callback", require("./routes/callbackSpotify"));
 app.use("/express_backend", require("./routes/home"));
 app.use("/logout", require("./routes/logout"));
-app.use("/getSpotifyPlaylist", require("./routes/getSpotifyPlaylist"));
+
 app.use("/loginGoogle", require("./routes/loginGoogle"));
 app.use("/callbackGoogle", require("./routes/callbackGoogle"));
+
+app.use("/getSpotifyPlaylists", require("./routes/getSpotifyPlaylists"));
+app.use("/getYoutubePlaylists", require("./routes/getYoutubePlaylists"));
+
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6

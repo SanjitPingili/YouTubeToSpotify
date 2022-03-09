@@ -8,6 +8,7 @@ class App extends Component {
     loggedIn: false,
     username: "Not Logged In",
     playlistsSpotify: [],
+    playlistsYoutube: [],
     item: [],
   };
 
@@ -30,10 +31,17 @@ class App extends Component {
         })
       )
       .catch((err) => console.log(err));
+
+    this.playlistYoutube()
+      .then((res) =>
+        this.setState({
+          playlistsYoutube: res.itemsYT})
+      )
+      .catch((err) => console.log(err));
   }
 
   playlistSpotify = async () => {
-    const response = await fetch("/getSpotifyPlaylist");
+    const response = await fetch("/getSpotifyPlaylists");
     const body = await response.json();
 
     if (response.status !== 200) {
@@ -41,6 +49,16 @@ class App extends Component {
     }
     return body;
   };
+
+  playlistYoutube = async () => {
+    let response = await fetch("/getYoutubePlaylists");
+    let body = await response.json();
+    if (response.status !== 200) {
+        throw Error(body.message);
+    }
+    return body;
+  }
+
   // fetching the GET route from the Express server which matches the GET route from server.js
   callBackendAPI = async () => {
     const response = await fetch("/express_backend");
@@ -80,6 +98,11 @@ class App extends Component {
       let names = [];
       for (let i = 0; i < this.state.playlistsSpotify.length; i++) {
         this.state.item = this.state.playlistsSpotify[i];
+        names[i] = this.state.item.name;
+        console.log(names[i]);
+      }
+      for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
+        this.state.item = this.state.playlistsYoutube[i];
         names[i] = this.state.item.name;
         console.log(names[i]);
       }
