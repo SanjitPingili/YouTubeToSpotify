@@ -3,7 +3,7 @@ const app = express(); //Line 2
 const port = process.env.PORT || 8000; //Line 3
 const session = require("express-session");
 const cors = require("cors");
-const config = require("./server/config");
+const config = require("./config");
 const cookieParser = require("cookie-parser");
 
 app.use(express.json());
@@ -16,13 +16,13 @@ app.use(
 );
 app.use(cookieParser());
 
-app.use("/loginSpotify", require("./server/routes/loginSpotify"));
-app.use("/callback", require("./server/routes/callbackSpotify"));
-app.use("/express_backend", require("./server/routes/home"));
-app.use("/logout", require("./server/routes/logout"));
-app.use("/getSpotifyPlaylist", require("./server/routes/getSpotifyPlaylist"));
-app.use("/loginGoogle", require("./server/routes/loginGoogle"));
-app.use("/callbackGoogle", require("./server/routes/callbackGoogle"));
+app.use("/loginSpotify", require("./routes/loginSpotify"));
+app.use("/callback", require("./routes/callbackSpotify"));
+app.use("/express_backend", require("./routes/home"));
+app.use("/logout", require("./routes/logout"));
+app.use("/getSpotifyPlaylist", require("./routes/getSpotifyPlaylist"));
+app.use("/loginGoogle", require("./routes/loginGoogle"));
+app.use("/callbackGoogle", require("./routes/callbackGoogle"));
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6
