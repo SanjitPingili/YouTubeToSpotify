@@ -39,6 +39,11 @@ state = {
       setTimeout(() => spotifyLogoutWindow.close(), 2000);*/
    }
 
+  loginYoutube() {
+      window.location.href = 'http://localhost:8000/loginGoogle';
+  }
+
+
   render() {
     const isLoggedIn = this.state.loggedIn;
     let button;
@@ -55,6 +60,7 @@ state = {
           <p className="App-intro">{this.state.username}</p>
           <div>
             <p>{button}</p>
+            <p><button onClick={this.loginYoutube}>Login to Youtube</button></p>
            </div>
         </header>
 
