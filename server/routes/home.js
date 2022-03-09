@@ -42,8 +42,8 @@ router.get('/', (req, res) => {
 
 
   if (config.google_access_token != "") {
-    let url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyAYzbzZdl3k7E5YKqUcmEgYr3molHEhVAc`;
-
+    console.log("Returned home from YT login");
+    /*let url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyAYzbzZdl3k7E5YKqUcmEgYr3molHEhVAc`;
     let options = {
       headers: {
         'Authorization': 'Basic ' + (new Buffer.from(config.googleClientID + ':' + config.googleClientSecret).toString('base64'))
@@ -58,29 +58,6 @@ router.get('/', (req, res) => {
         console.log(response.statusCode);
       }
       console.log(body);
-    });
-
-    /*request(
-      {
-        method: "GET",
-        url: GOOGLE_BASE_URL + "channels",
-        part: ['snippet', 'contentDetails', 'statistics'],
-        mine: true,
-        headers: google_headers,
-        key: config.google_api_key,
-        json: true,
-      }, (error, response, body) => {
-        if (!error && response.statusCode === 200) {
-          console.log("Getting Youtube Profile");
-          console.log(body['items'].id);
-          res.send(
-            {
-              'email' : body['items'].id
-            });
-        } else {
-          console.log("Error fetching profile");
-          console.log(error);
-        }
     });*/
   }
 });

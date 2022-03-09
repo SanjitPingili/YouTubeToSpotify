@@ -24,6 +24,8 @@ app.use("/callback", require("./server/routes/callbackSpotify"));
 app.use("/express_backend", require("./server/routes/home"));
 app.use("/logout", require("./server/routes/logout"));
 
+app.use("/loginGoogle", require("./server/routes/loginGoogle"));
+app.use("/callbackGoogle", require("./server/routes/callbackGoogle"));
 
 
 // This displays message that the server running and listening to specified port
