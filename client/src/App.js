@@ -14,6 +14,7 @@ class App extends Component {
     item: [],
     itemYT: [],
     isActive: false,
+    isActiveYT: false,
     names: [],
   };
 
@@ -33,6 +34,7 @@ class App extends Component {
       .then((res) =>
         this.setState({
           playlistsSpotify: res.items,
+          names: res.names,
           //item: res.items[0],
         })
       )
@@ -95,9 +97,13 @@ class App extends Component {
     window.location.href = "http://localhost:8000/loginGoogle";
   }
 
-  handleSpotify=(event) =>{
-    this.setState({ isActive: !this.state.isActive })
+  handleYoutube=(event) =>{
+    this.setState({ isActiveYT: !this.state.isActiveYT })
   }
+
+  handleSpotify=(event) =>{
+      this.setState({ isActive: !this.state.isActive })
+    }
 
   render() {
     const isLoggedIn = this.state.loggedIn;
@@ -107,10 +113,11 @@ class App extends Component {
     } else {
       button = <button onClick={this.logoutSpotify}>Logout of Spotify</button>;
       console.log("SPOTIFY");
+      let names_spotify = []
       for (let i = 0; i < this.state.playlistsSpotify.length; i++) {
         this.state.item = this.state.playlistsSpotify[i];
-        names[i] = this.state.item.name;
-        console.log(names[i]);
+        names_spotify[i] = this.state.item.name;
+        console.log(names_spotify[i]);
       }
       console.log("YOUTUBE");
       for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
@@ -120,26 +127,41 @@ class App extends Component {
 
     let title = "Youtube Playlists"
     let content = this.state.playlistsYoutube
+    let content2 = this.state.names
+
 
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Youtube To Spotify</h1>
           <p className="App-intro">{this.state.username}</p>
-          <div>
+          {this.state.loggedIn && <div style={{display: 'inline'}}>
             <React.Fragment>
                 <div className="accordion">
                   <div className="accordion-item">
-                    <div onClick={()=>{this.handleSpotify()}} className="accordion-title">
+                    <div onClick={()=>{this.handleYoutube()}} className="accordion-title">
                       <div>{title}</div>
-                      <div>{this.state.isActive ? "-" : "+"}</div>
+                      <div>{this.state.isActiveYT ? "-" : "+"}</div>
                     </div>
-                    {this.state.isActive && content.map((item) => <p>{item}</p>)}
+                    {this.state.isActiveYT && content.map((item) => <p>{item}</p>)}
 
                   </div>
                 </div>
             </React.Fragment>
-          </div>
+
+            <React.Fragment>
+                <div className="accordion">
+                    <div className="accordion-item">
+                        <div onClick={()=>{this.handleSpotify()}} className="accordion-title">
+                            <div>Spotify Playlists</div>
+                            <div>{this.state.isActive ? "-" : "+"}</div>
+                        </div>
+                        {this.state.isActive && content2.map((item) => <p>{item}</p>)}
+
+                    </div>
+                </div>
+            </React.Fragment>
+          </div>}
 
           <div>
             <p>{button}</p>

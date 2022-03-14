@@ -18,8 +18,13 @@ router.get("/", (req, res) => {
         if (!error && response.statusCode === 200) {
           console.log("Playlist:\n\n");
           console.log(body);
+          let names_spotify = []
+          for (let i = 0; i < body["items"].length; i++) {
+            names_spotify.push(body["items"][i].name)
+          }
           res.send({
             items: body["items"],
+            names: names_spotify,
           });
         } else {
           console.log("Error fetching playlist");
