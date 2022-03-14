@@ -13,7 +13,10 @@ class App extends Component {
     snippetYoutube: [],
     item: [],
     itemYT: [],
+    isActive: false,
+    names: [],
   };
+
 
   componentDidMount() {
     this.callBackendAPI()
@@ -92,6 +95,10 @@ class App extends Component {
     window.location.href = "http://localhost:8000/loginGoogle";
   }
 
+  handleSpotify=(event) =>{
+    this.setState({ isActive: !this.state.isActive })
+  }
+
   render() {
     const isLoggedIn = this.state.loggedIn;
     let button;
@@ -99,7 +106,6 @@ class App extends Component {
       button = <button onClick={this.loginSpotify}>Login to Spotify</button>;
     } else {
       button = <button onClick={this.logoutSpotify}>Logout of Spotify</button>;
-      let names = [];
       console.log("SPOTIFY");
       for (let i = 0; i < this.state.playlistsSpotify.length; i++) {
         this.state.item = this.state.playlistsSpotify[i];
@@ -110,57 +116,31 @@ class App extends Component {
       for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
         console.log(this.state.playlistsYoutube[i]);
       }
-      // <React.Fragment>
-      //   <h1>Spotify Playlist</h1>
-      //   <div className="accordion">
-      //     <div className="accordion-item">
-      //       <div className="accordion-title">
-      //         <div>{title}</div>
-      //         <div>+</div>
-      //       </div>
-      //       <div className="accordion-content">{content}</div>
-      //     </div>
-      //   </div>
-      // </React.Fragment>;
-      //this.state.itemYT = this.state.playlistsYoutube[0];
-      //console.log(itemYT);
-      //this.state.snippetYoutube = this.state.itemYT[0];
-      // for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
-      //   this.state.item = this.state.playlistsYoutube[i];
-      //   this.state.snippetYoutube = this.state.item[i];
-      //   names[i] = this.state.snippetYoutube.title;
-      //   console.log(names[i]);
-      // }
-    }
-    // const isYoutubeLoggedIn = this.state.loggedInYouTube;
-    // let youtubeButton;
-    // if (!isYoutubeLoggedIn) {
-    //   youtubeButton = (
-    //     <button onClick={this.loginYoutube}>Login to YouTube</button>
-    //   );
-    // } else {
-    //   youtubeButton = (
-    //     <button onClick={this.logoutSpotify}>Logout of YouTube</button>
-    //   );
-    //   for (let i = 0; i < this.state.itemYT.length; i++) {
-    //     console.log(this.state.itemYT[i]);
-    //   }
-    //   //this.state.itemYT = this.state.playlistsYoutube[0];
-    //   //console.log(itemYT);
-    //   //this.state.snippetYoutube = this.state.itemYT[0];
-    //   // for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
-    //   //   this.state.item = this.state.playlistsYoutube[i];
-    //   //   this.state.snippetYoutube = this.state.item[i];
-    //   //   names[i] = this.state.snippetYoutube.title;
-    //   //   console.log(names[i]);
-    //   // }
-    // }
+     }
+
+    let title = "Youtube Playlists"
+    let content = this.state.playlistsYoutube
 
     return (
       <div className="App">
         <header className="App-header">
           <h1 className="App-title">Youtube To Spotify</h1>
           <p className="App-intro">{this.state.username}</p>
+          <div>
+            <React.Fragment>
+                <div className="accordion">
+                  <div className="accordion-item">
+                    <div onClick={()=>{this.handleSpotify()}} className="accordion-title">
+                      <div>{title}</div>
+                      <div>{this.state.isActive ? "-" : "+"}</div>
+                    </div>
+                    {this.state.isActive && content.map((item) => <p>{item}</p>)}
+
+                  </div>
+                </div>
+            </React.Fragment>
+          </div>
+
           <div>
             <p>{button}</p>
             <p>
