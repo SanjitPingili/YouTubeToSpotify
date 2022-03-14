@@ -135,26 +135,24 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Youtube To Spotify</h1>
           <p className="App-intro">{this.state.username}</p>
-          {this.state.loggedIn && <div style={{display: 'inline'}}>
+          {this.state.loggedIn && <div style={{display:'flex', flexDirection:'row'}}>
             <React.Fragment>
-                <div className="accordion">
+                <div className="accordion" style={{marginRight: 20}}>
                   <div className="accordion-item">
                     <div onClick={()=>{this.handleYoutube()}} className="accordion-title">
-                      <div>{title}</div>
-                      <div>{this.state.isActiveYT ? "-" : "+"}</div>
+                      <div>{title} {this.state.isActiveYT ? "-" : "+"}{"    "}</div>
                     </div>
                     {this.state.isActiveYT && content.map((item) => <p>{item}</p>)}
 
                   </div>
                 </div>
             </React.Fragment>
-
+            <div>{"  "}|{"  "}</div>
             <React.Fragment>
-                <div className="accordion">
+                <div className="accordion" style={{marginLeft: 20}}>
                     <div className="accordion-item">
                         <div onClick={()=>{this.handleSpotify()}} className="accordion-title">
-                            <div>Spotify Playlists</div>
-                            <div>{this.state.isActive ? "-" : "+"}</div>
+                            <div>{"    "}Spotify Playlists {this.state.isActive ? "-" : "+"}</div>
                         </div>
                         {this.state.isActive && content2.map((item) => <p>{item}</p>)}
 
