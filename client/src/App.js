@@ -110,6 +110,18 @@ class App extends Component {
       for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
         console.log(this.state.playlistsYoutube[i]);
       }
+      // <React.Fragment>
+      //   <h1>Spotify Playlist</h1>
+      //   <div className="accordion">
+      //     <div className="accordion-item">
+      //       <div className="accordion-title">
+      //         <div>{title}</div>
+      //         <div>+</div>
+      //       </div>
+      //       <div className="accordion-content">{content}</div>
+      //     </div>
+      //   </div>
+      // </React.Fragment>;
       //this.state.itemYT = this.state.playlistsYoutube[0];
       //console.log(itemYT);
       //this.state.snippetYoutube = this.state.itemYT[0];
