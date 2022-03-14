@@ -42,8 +42,8 @@ router.get('/', (req, res) => {
 
 
   if (config.google_access_token != "") {
-    console.log("Returned home from YT login");
-    /*let url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyAYzbzZdl3k7E5YKqUcmEgYr3molHEhVAc`;
+    /*
+    let url = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyAYzbzZdl3k7E5YKqUcmEgYr3molHEhVAc`;
     let options = {
       headers: {
         'Authorization': 'Basic ' + (new Buffer.from(config.googleClientID + ':' + config.googleClientSecret).toString('base64'))
@@ -58,7 +58,8 @@ router.get('/', (req, res) => {
         console.log(response.statusCode);
       }
       console.log(body);
-    });*/
+    });
+    */
   }
 });
 
