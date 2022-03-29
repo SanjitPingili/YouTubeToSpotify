@@ -1,12 +1,12 @@
 {
-  "name": "YouTubeToSpotify",
+  "name": "youtubetospotify",
   "version": "1.0.0",
   "description": "React/Node+Express Starter Template: https://www.section.io/engineering-education/how-to-setup-nodejs-express-for-react/",
   "main": "index.js",
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.2",
     "json": "^11.0.0",
     "request": "^2.88.2"
@@ -20,5 +20,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SanjitPingili/YouTubeToSpotify/issues"
+  },
+  "homepage": "https://github.com/SanjitPingili/YouTubeToSpotify#readme",
+  "devDependencies": {}
 }

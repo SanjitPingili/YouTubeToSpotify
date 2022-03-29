@@ -133,7 +133,16 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Youtube To Spotify</h1>
+          <div className = "Visual" style={{display:'flex', gap: '50px'}}>
+            <img src = "YouTube-logo-black-background.png" alt = "Youtube" style={{width:'300px', height: '200px'}}></img>
+            <img src = "arrow-icon-18-256.png" alt = "Arrow" style={{width:'200px', height: '180px'}}></img>
+            <img src = "Spotifyimg.png" alt = "Spotify" style={{width:'400px', height: '200px'}}></img>
+          </div>
+          <h1 className="App-title">
+            <span style = {{color: 'red'}}>YouTube </span>
+            <span style = {{color: 'white'}}>To</span>
+            <span style = {{color: '#013220'}}> Spotify</span>
+          </h1>
           <p className="App-intro">{this.state.username}</p>
           {this.state.loggedIn && <div style={{display:'flex', flexDirection:'row'}}>
             <React.Fragment>
