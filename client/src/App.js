@@ -18,7 +18,6 @@ class App extends Component {
     names: [],
   };
 
-
   componentDidMount() {
     this.callBackendAPI()
       .then((res) =>
@@ -97,13 +96,13 @@ class App extends Component {
     window.location.href = "http://localhost:8000/loginGoogle";
   }
 
-  handleYoutube=(event) =>{
-    this.setState({ isActiveYT: !this.state.isActiveYT })
-  }
+  handleYoutube = (event) => {
+    this.setState({ isActiveYT: !this.state.isActiveYT });
+  };
 
-  handleSpotify=(event) =>{
-      this.setState({ isActive: !this.state.isActive })
-    }
+  handleSpotify = (event) => {
+    this.setState({ isActive: !this.state.isActive });
+  };
 
   render() {
     const isLoggedIn = this.state.loggedIn;
@@ -113,7 +112,7 @@ class App extends Component {
     } else {
       button = <button onClick={this.logoutSpotify}>Logout of Spotify</button>;
       console.log("SPOTIFY");
-      let names_spotify = []
+      let names_spotify = [];
       for (let i = 0; i < this.state.playlistsSpotify.length; i++) {
         this.state.item = this.state.playlistsSpotify[i];
         names_spotify[i] = this.state.item.name;
@@ -123,52 +122,83 @@ class App extends Component {
       for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
         console.log(this.state.playlistsYoutube[i]);
       }
-     }
+    }
 
-    let title = "Youtube Playlists"
-    let content = this.state.playlistsYoutube
-    let content2 = this.state.names
-
+    let title = "Youtube Playlists";
+    let content = this.state.playlistsYoutube;
+    let content2 = this.state.names;
 
     return (
       <div className="App">
         <header className="App-header">
-          <div className = "Visual" style={{display:'flex', gap: '50px'}}>
-            <img src = "YouTube-logo-black-background.png" alt = "Youtube" style={{width:'300px', height: '200px'}}></img>
-            <img src = "arrow-icon-18-256.png" alt = "Arrow" style={{width:'200px', height: '180px'}}></img>
-            <img src = "Spotifyimg.png" alt = "Spotify" style={{width:'400px', height: '200px'}}></img>
+          <div className="Visual" style={{ display: "flex", gap: "50px" }}>
+            <img
+              src="YouTube-logo-black-background.png"
+              alt="Youtube"
+              style={{ width: "300px", height: "200px" }}
+            ></img>
+            <img
+              src="arrow-icon-18-256.png"
+              alt="Arrow"
+              style={{ width: "200px", height: "180px" }}
+            ></img>
+            <img
+              src="Spotifyimg.png"
+              alt="Spotify"
+              style={{ width: "400px", height: "200px" }}
+            ></img>
           </div>
           <h1 className="App-title">
-            <span style = {{color: 'red'}}>YouTube </span>
-            <span style = {{color: 'white'}}>To</span>
-            <span style = {{color: '#013220'}}> Spotify</span>
+            <span style={{ color: "red" }}>YouTube </span>
+            <span style={{ color: "white" }}>To</span>
+            <span style={{ color: "#013220" }}> Spotify</span>
           </h1>
           <p className="App-intro">{this.state.username}</p>
-          {this.state.loggedIn && <div style={{display:'flex', flexDirection:'row'}}>
-            <React.Fragment>
-                <div className="accordion" style={{marginRight: 20}}>
+          {this.state.loggedIn && (
+            <div style={{ display: "flex", flexDirection: "row" }}>
+              <React.Fragment>
+                <div className="accordion" style={{ marginRight: 20 }}>
                   <div className="accordion-item">
-                    <div onClick={()=>{this.handleYoutube()}} className="accordion-title">
-                      <div>{title} {this.state.isActiveYT ? "-" : "+"}{"    "}</div>
+                    <div
+                      onClick={() => {
+                        this.handleYoutube();
+                      }}
+                      className="accordion-title"
+                    >
+                      <div>
+                        {title} {this.state.isActiveYT ? "-" : "+"}
+                        {"    "}
+                      </div>
                     </div>
-                    {this.state.isActiveYT && content.map((item) => <p>{item}</p>)}
-
+                    {this.state.isActiveYT &&
+                      content.map((item) => <p>{item}</p>)}
                   </div>
                 </div>
-            </React.Fragment>
-            <div>{"  "}|{"  "}</div>
-            <React.Fragment>
-                <div className="accordion" style={{marginLeft: 20}}>
-                    <div className="accordion-item">
-                        <div onClick={()=>{this.handleSpotify()}} className="accordion-title">
-                            <div>{"    "}Spotify Playlists {this.state.isActive ? "-" : "+"}</div>
-                        </div>
-                        {this.state.isActive && content2.map((item) => <p>{item}</p>)}
-
+              </React.Fragment>
+              <div>
+                {"  "}|{"  "}
+              </div>
+              <React.Fragment>
+                <div className="accordion" style={{ marginLeft: 20 }}>
+                  <div className="accordion-item">
+                    <div
+                      onClick={() => {
+                        this.handleSpotify();
+                      }}
+                      className="accordion-title"
+                    >
+                      <div>
+                        {"    "}Spotify Playlists{" "}
+                        {this.state.isActive ? "-" : "+"}
+                      </div>
                     </div>
+                    {this.state.isActive &&
+                      content2.map((item) => <button>{item}</button>)}
+                  </div>
                 </div>
-            </React.Fragment>
-          </div>}
+              </React.Fragment>
+            </div>
+          )}
 
           <div>
             <p>{button}</p>

@@ -18,10 +18,14 @@ router.get("/", (req, res) => {
         if (!error && response.statusCode === 200) {
           console.log("Playlist:\n\n");
           console.log(body);
-          let names_spotify = []
+          let names_spotify = [];
+          let playlistIds = [];
           for (let i = 0; i < body["items"].length; i++) {
-            names_spotify.push(body["items"][i].name)
+            names_spotify.push(body["items"][i].name);
+            playlistIds.push(body["items"][i].id);
           }
+          console.log(names_spotify);
+          console.log(playlistIds);
           res.send({
             items: body["items"],
             names: names_spotify,
