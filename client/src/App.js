@@ -16,6 +16,7 @@ class App extends Component {
     isActive: false,
     isActiveYT: false,
     names: [],
+    playlistIds: [],
   };
 
   componentDidMount() {
@@ -34,7 +35,7 @@ class App extends Component {
         this.setState({
           playlistsSpotify: res.items,
           names: res.names,
-          //item: res.items[0],
+          playlistIds: res.playListIds,
         })
       )
       .catch((err) => console.log(err));

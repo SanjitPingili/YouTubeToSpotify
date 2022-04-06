@@ -11,7 +11,8 @@ module.exports = {
   refresh_token: "",
   loggedOut: false,
 
-  youtube_client_id: "919300781767-0gt729ekgrchfnu568d7pp8gt1b29t5m.apps.googleusercontent.com",
+  youtube_client_id:
+    "919300781767-0gt729ekgrchfnu568d7pp8gt1b29t5m.apps.googleusercontent.com",
   youtube_client_secret: "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",
   youtube_state_key: "googleOath2State",
   youtube_redirect_uri: "http://localhost:8000/callbackGoogle",
