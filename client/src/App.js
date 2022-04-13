@@ -35,7 +35,7 @@ class App extends Component {
         this.setState({
           playlistsSpotify: res.items,
           names: res.names,
-          playlistIds: res.playListIds,
+          playlistIds: res.playListIDs,
         })
       )
       .catch((err) => console.log(err));
@@ -105,6 +105,15 @@ class App extends Component {
     this.setState({ isActive: !this.state.isActive });
   };
 
+  getID = (playListName) => {
+    console.log(playListName);
+    for (let i = 0; i < this.state.names.length; i++) {
+      if (this.state.names[i] == playListName) {
+        console.log(this.state.playlistIds[i]);
+      }
+    }
+  };
+
   render() {
     const isLoggedIn = this.state.loggedIn;
     let button;
@@ -127,7 +136,8 @@ class App extends Component {
 
     let title = "Youtube Playlists";
     let content = this.state.playlistsYoutube;
-    let content2 = this.state.names;
+    let spotifyPlayListNames = this.state.names;
+    let spotifyPlaylistIds = this.state.playlistIds;
 
     return (
       <div className="App">
@@ -194,7 +204,9 @@ class App extends Component {
                       </div>
                     </div>
                     {this.state.isActive &&
-                      content2.map((item) => <button>{item}</button>)}
+                      spotifyPlayListNames.map((item) => (
+                        <button onClick={() => this.getID(item)}>{item}</button>
+                      ))}
                   </div>
                 </div>
               </React.Fragment>

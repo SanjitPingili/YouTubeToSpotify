@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
           res.send({
             items: body["items"],
             names: names_spotify,
-            playlists: playlistIds,
+            playListIDs: playlistIds,
           });
         } else {
           console.log("Error fetching playlist");
