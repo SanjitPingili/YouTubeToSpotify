@@ -4,26 +4,29 @@ const request = require("request");
 const config = require("../config");
 
 router.get("/", (req, res) => {
-  let BASE_URL = "https://youtube.googleapis.com/youtube/v3/playlists?";
+  let BASE_URL = "https://www.googleapis.com/youtube/v3/search?";
+  let videoName = req.query.name;
   let headers = { Authorization: "Bearer " + config.youtube_access_token };
-  let playlists = [];
   if (config.youtube_access_token != "") {
     request(
       {
         method: "GET",
-        url: BASE_URL + "part=snippet&mine=true&key=" + config.youtube_api_key,
+        url:
+          BASE_URL +
+          "part=snippet&maxResults=5&q=" +
+          videoName +
+          "&type=video&key=" +
+          config.youtube_api_key,
         headers: headers,
         json: true,
       },
       (error, response, body) => {
         if (!error && response.statusCode === 200) {
           //console.log(body["items"][0].snippet.title);
-          console.log(body);
-          for (let i = 0; i < body["items"].length; i++) {
-            playlists[i] = body["items"][i].snippet.title;
-          }
+          let id = body["items"][0].id.videoId;
+          console.log(id);
           res.send({
-            itemsYT: playlists,
+            id,
           });
         } else {
           console.log("Error fetching playlist");

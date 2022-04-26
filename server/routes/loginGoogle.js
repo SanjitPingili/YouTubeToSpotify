@@ -18,7 +18,8 @@ let authorize = "https://accounts.google.com/o/oauth2/v2/auth?";
 
 let redirect_uri = config.youtube_redirect_uri;
 
-let scope = "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtubepartner-channel-audit";
+let scope =
+  "https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/youtube.force-ssl https://www.googleapis.com/auth/youtubepartner";
 
 router.get("/", (req, res) => {
   config.youtube_state = generateCookie();
@@ -30,7 +31,7 @@ router.get("/", (req, res) => {
         client_id: config.youtube_client_id,
         redirect_uri: redirect_uri,
         scope: scope,
-        response_type: 'code',
+        response_type: "code",
         prompt: "consent",
         include_granted_scopes: true,
         state: config.youtube_state,

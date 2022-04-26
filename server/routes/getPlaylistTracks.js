@@ -4,26 +4,28 @@ const request = require("request");
 const config = require("../config");
 
 router.get("/", (req, res) => {
-  let BASE_URL = "https://youtube.googleapis.com/youtube/v3/playlists?";
-  let headers = { Authorization: "Bearer " + config.youtube_access_token };
-  let playlists = [];
-  if (config.youtube_access_token != "") {
+  let playlistID = req.query.id;
+  let BASE_URL = "https://api.spotify.com/v1/";
+  let headers = { Authorization: "Bearer " + config.access_token };
+  if (config.access_token != "") {
     request(
       {
         method: "GET",
-        url: BASE_URL + "part=snippet&mine=true&key=" + config.youtube_api_key,
+        url: BASE_URL + "playlists/" + playlistID + "/tracks",
         headers: headers,
         json: true,
       },
       (error, response, body) => {
         if (!error && response.statusCode === 200) {
-          //console.log(body["items"][0].snippet.title);
-          console.log(body);
+          console.log("Playlist:\n\n");
+          console.log;
+          trackList = [];
           for (let i = 0; i < body["items"].length; i++) {
-            playlists[i] = body["items"][i].snippet.title;
+            trackList.push(body["items"][i].track.name);
           }
+          console.log(trackList);
           res.send({
-            itemsYT: playlists,
+            trackList,
           });
         } else {
           console.log("Error fetching playlist");
@@ -32,5 +34,9 @@ router.get("/", (req, res) => {
     );
   }
 });
+
+// router.get("/", (req, res) => {
+//   console.log(req.query.id);
+// });
 
 module.exports = router;

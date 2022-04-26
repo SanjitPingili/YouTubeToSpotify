@@ -27,6 +27,11 @@ app.use("/callbackGoogle", require("./routes/callbackGoogle"));
 app.use("/getSpotifyPlaylists", require("./routes/getSpotifyPlaylists"));
 app.use("/getYoutubePlaylists", require("./routes/getYoutubePlaylists"));
 
+app.use("/getPlaylistTracks", require("./routes/getPlaylistTracks"));
+
+app.use("/createYouTubePlaylist", require("./routes/createYouTubePlaylist"));
+app.use("/searchTrackInYouTube", require("./routes/searchTrackInYouTube"));
+app.use("/updatePlaylist", require("./routes/updatePlaylist"));
 
 // This displays message that the server running and listening to specified port
 app.listen(port, () => console.log(`Listening on port ${port}`)); //Line 6

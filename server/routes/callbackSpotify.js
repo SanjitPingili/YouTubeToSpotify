@@ -12,39 +12,43 @@ router.get("/", (req, res) => {
   let state = req.query.state || null;
   let cookie = req.cookies ? req.cookies[config.stateKey] : null;
   if (state !== null && state === cookie) {
-     res.clearCookie(config.stateKey);
-     request(
-         // POST request to /token endpoint
-         {
-           method: "POST",
-           url: 'https://accounts.spotify.com/api/token',
-           form: {
-             code: code,
-             redirect_uri: config.redirectURI,
-             grant_type: 'authorization_code',
-           },
-           headers: {
-             'Authorization':
-               'Basic ' +
-               new Buffer.from(config.clientID + ':' + config.clientSecret).toString('base64'),
-           },
-           json: true,
-         },
+    res.clearCookie(config.stateKey);
+    request(
+      // POST request to /token endpoint
+      {
+        method: "POST",
+        url: "https://accounts.spotify.com/api/token",
+        form: {
+          code: code,
+          redirect_uri: config.redirectURI,
+          grant_type: "authorization_code",
+        },
+        headers: {
+          Authorization:
+            "Basic " +
+            new Buffer.from(
+              config.clientID + ":" + config.clientSecret
+            ).toString("base64"),
+        },
+        json: true,
+      },
 
-         // callback
-         (error, response, body) => {
-           if (!error && response.statusCode === 200) {
-             config.access_token = body.access_token;
-             config.refresh_token = body.refresh_token;
-             config.loggedOut = false;
-             res.redirect(`http://localhost:${config.clientPort}`);
-             console.log("Successfully logged into Spotify");
-           } else {
-             console.log("error");
-             console.log(response.statusCode);
-             console.log(response.headers);
-           }
-         });
+      // callback
+      (error, response, body) => {
+        if (!error && response.statusCode === 200) {
+          config.access_token = body.access_token;
+          config.refresh_token = body.refresh_token;
+          console.log(config.access_token);
+          config.loggedOut = false;
+          res.redirect(`http://localhost:${config.clientPort}`);
+          console.log("Successfully logged into Spotify");
+        } else {
+          console.log("error");
+          console.log(response.statusCode);
+          console.log(response.headers);
+        }
+      }
+    );
   } else {
     console.log("Cookie mismatch or null state");
   }

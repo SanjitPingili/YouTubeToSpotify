@@ -9,9 +9,14 @@ class App extends Component {
     loggedInYouTube: false,
     username: "Not Logged In",
     playlistsSpotify: [],
+    canConvert: false,
+    currentPlaylistName: null,
     playlistsYoutube: [],
     snippetYoutube: [],
     item: [],
+    playlistTracks: [],
+    youTubeVideoIds: [],
+    YTPlaylistID: null,
     itemYT: [],
     isActive: false,
     isActiveYT: false,
@@ -20,6 +25,7 @@ class App extends Component {
   };
 
   componentDidMount() {
+    console.log("im called");
     this.callBackendAPI()
       .then((res) =>
         this.setState({
@@ -47,6 +53,11 @@ class App extends Component {
         })
       )
       .catch((err) => console.log(err));
+
+    // if (this.state.YTPlaylistID != null && this.state.youTubeVideoIds != null) {
+    //   console.log("updating playlist!");
+    //   this.updatePlaylist();
+    // }
   }
 
   playlistSpotify = async () => {
@@ -65,7 +76,36 @@ class App extends Component {
     if (response.status !== 200) {
       throw Error(body.message);
     }
+    this.setState({
+      loggedInYouTube: true,
+    });
     return body;
+  };
+
+  updatePlaylist = async () => {
+    videoIDs = this.state.youTubeVideoIds;
+    youTubePlaylistID = this.state.YTPlaylistID;
+    if (videoIDs == null || youTubePlaylistID == null) {
+      return;
+    }
+    for (let i = 0; i < videoIDs.length; i++) {
+      console.log(
+        "Updating playlist " + youTubePlaylistID + " with " + videoIDs[i]
+      );
+      fetch(
+        "http://localhost:8000/updatePlaylist?pID=" +
+          youTubePlaylistID +
+          "&vID=" +
+          videoIDs[i],
+        requestOptions
+      )
+        .then((response) => response.text())
+        .then((result) => {});
+    }
+    this.setState({
+      YTPlaylistID: null,
+      youTubeVideoIds: null,
+    });
   };
 
   // fetching the GET route from the Express server which matches the GET route from server.js
@@ -105,18 +145,122 @@ class App extends Component {
     this.setState({ isActive: !this.state.isActive });
   };
 
-  getID = (playListName) => {
-    console.log(playListName);
-    for (let i = 0; i < this.state.names.length; i++) {
-      if (this.state.names[i] == playListName) {
-        console.log(this.state.playlistIds[i]);
+  convertPlaylist = async (playListName) => {
+    let youTubePlaylistID;
+    let videoIDs = [];
+    let temp;
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    await fetch(
+      "http://localhost:8000/createYouTubePlaylist?name=" + playListName,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        console.log(result);
+        temp = JSON.parse(result);
+        youTubePlaylistID = temp.id;
+        console.log(youTubePlaylistID);
+      });
+
+    for (let i = 0; i < 2; i++) {
+      // this.state.playlistTracks.length
+      let videoID;
+      const result = await fetch(
+        "http://localhost:8000/searchTrackInYouTube?name=" +
+          this.state.playlistTracks[i],
+        requestOptions
+      );
+      const data = await result.json();
+      console.log(data);
+      videoID = data.id;
+      videoIDs.push(videoID);
+
+      // if (videoID != null && youTubePlaylistID != null) {
+      //   console.log(
+      //     "Updating playlist " + youTubePlaylistID + " with " + videoIDs[i]
+      //   );
+      //   fetch(
+      //     "http://localhost:8000/updatePlaylist?pID=" +
+      //       youTubePlaylistID +
+      //       "&vID=" +
+      //       videoID,
+      //     requestOptions
+      //   )
+      //     .then((response) => response.text())
+      //     .then((result) => {});
+      // }
+    }
+    console.log(videoIDs);
+    // this.setState({
+    //   youTubeVideoIds: videoIDs,
+    //   YTPlaylistID: youTubePlaylistID,
+    // });
+    // await this.updatePlaylist();
+    console.log(videoIDs.length);
+    for (let i = 0; i < videoIDs.length; i++) {
+      console.log(
+        "Updating playlist " + youTubePlaylistID + " with " + videoIDs[i]
+      );
+      try {
+        const resp = await fetch(
+          "http://localhost:8000/updatePlaylist?pID=" +
+            youTubePlaylistID +
+            "&vID=" +
+            videoIDs[i],
+          requestOptions
+        );
+      } catch (e) {
+        console.log(e);
       }
     }
   };
 
+  getID = (playListName) => {
+    console.log(playListName);
+    let playlistID = "";
+    let temp;
+    let currPlayListName = playListName;
+    for (let i = 0; i < this.state.names.length; i++) {
+      if (this.state.names[i] == playListName) {
+        console.log(this.state.playlistIds[i]);
+        playlistID = this.state.playlistIds[i];
+        break;
+      }
+    }
+
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://localhost:8000/getPlaylistTracks?id=" + playlistID,
+      requestOptions
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        temp = JSON.parse(result);
+        this.setState({
+          playlistTracks: temp.trackList,
+          currentPlaylistName: currPlayListName,
+          canConvert: true,
+        });
+        console.log(this.state.playlistTracks);
+        console.log(this.state.canConvert);
+      });
+  };
+
   render() {
     const isLoggedIn = this.state.loggedIn;
+    const isLoggedInYT = this.state.loggedInYouTube;
+    const showConvert = this.state.canConvert;
     let button;
+    let buttonYT;
+    let convertButton;
     if (!isLoggedIn) {
       button = <button onClick={this.loginSpotify}>Login to Spotify</button>;
     } else {
@@ -128,10 +272,31 @@ class App extends Component {
         names_spotify[i] = this.state.item.name;
         console.log(names_spotify[i]);
       }
+    }
+
+    if (!isLoggedInYT) {
+      buttonYT = <button onClick={this.loginYoutube}>Login to YouTube</button>;
+    } else {
+      buttonYT = <button onClick={this.loginYoutube}>Logout of YouTube</button>;
       console.log("YOUTUBE");
-      for (let i = 0; i < this.state.playlistsYoutube.length; i++) {
-        console.log(this.state.playlistsYoutube[i]);
-      }
+    }
+
+    if (!showConvert) {
+      convertButton = (
+        <button disabled={true}>Select a playlist to convert!</button>
+      );
+    } else {
+      console.log(this.state.currentPlaylistName);
+      let buttonText =
+        "Convert " + this.state.currentPlaylistName + " Playlist!";
+      convertButton = (
+        <button
+          disabled={false}
+          onClick={() => this.convertPlaylist(this.state.currentPlaylistName)}
+        >
+          {buttonText}
+        </button>
+      );
     }
 
     let title = "Youtube Playlists";
@@ -215,9 +380,8 @@ class App extends Component {
 
           <div>
             <p>{button}</p>
-            <p>
-              <button onClick={this.loginYoutube}>Login to YouTube</button>
-            </p>
+            <p>{buttonYT}</p>
+            <p>{convertButton}</p>
           </div>
         </header>
       </div>
